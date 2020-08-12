@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{msg}}{{msg1}}
+        <button @click="add">{{ number }}</button>
+        <ul>
+            <li v-for="(item,index) in arr" :key="index" @click="namec = item.component">{{ item.label }}</li>
+        </ul>
+        <keep-alive>
+            <component :is="namec"></component>
+        </keep-alive>
+
+
+        
+    </div>
+    <template id="first">
+        <div>
+            我是第一段内容
+            <img :src="imgurl1" alt="">
+        </div>
+        
+    </template>
+    <template id="second">
+        <div>
+            我是第二二段内容
+            <img :src="imgurl2" alt="">
+        </div>
+        
+    </template>
+</body>
+</html>
+
+
+<script src="mixin.js"></script>
+<script>
+    console.log(mixin)
+    new Vue({
+        el:'#app',
+        mixins:[mixin],
+        data(){
+            return {
+                msg:'我是消息1',
+                arr:[
+                    {
+                        label: '第一段',
+                        component: 'first'
+                    },
+                    {
+                        label: '第er段',
+                        component: 'second'
+                    }
+                ],
+                namec: '',
+                number:1
+
+            }
+        },
+        created(){
+            console.log('main created')
+            this.asynfn().then(res=>{
+                console.log(res)
+            })
+            console.log(this.asyncfn1().then(res=>{
+                console.log(res)
+            }))
+        },
+        mounted(){
+            console.log('main mounted')
+        },
+        methods:{
+            add(){
+                console.log(2323)
+            }
+        },
+
+        components:{
+            first:{
+                template:'#first',
+                data:function(){
+                    return {
+                        imgurl1:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2698251240,2308173950&fm=26&gp=0.jpg'
+                    }
+                },
+                mounted(){
+                    console.log(1)
+                }
+            },
+            second:{
+                template:'#second',
+                data: function(){
+                    return {
+                        imgurl2: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1338595300,2119662265&fm=26&gp=0.jpg'
+                    }
+                },
+                mounted(){
+                    console.log(2)
+                }
+            }
+        }
+        
+    })
+</script>
