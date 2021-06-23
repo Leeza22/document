@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      /* overflow: auto hidden; */
+    }
+
+    ul,
+    li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background-color: beige;
+    }
+
+    .item {
+      width: 200px;
+      background-color: pink;
+      margin: 0 auto;
+
+      display: flex;
+    }
+
+    .circle-box {
+      flex: 0 0 40px;
+      position: relative;
+    }
+
+    .circle-box::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      top: 30px;
+
+      height: calc(100% - 20px);
+      width: 0px;
+      border: 1px dashed red;
+      /* background-color: red; */
+    }
+    /* .item:last-of-type .circle-box::after {
+      width: 0;
+    } */
+    .item:last-child .circle-box::after {
+      width: 0;
+      border: none;
+    }
+
+    .circle {
+      width: 40px;
+      height: 40px;
+      position: relative;
+    }
+
+    .circle::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: 1;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      background-color: yellow;
+      /* border: 5px solid deepskyblue; */
+      /* outline: deepskyblue solid 5px; */
+      /* 设置out-radius不兼容 */
+      box-shadow: 0 0 0 5px deepskyblue;
+      animation: shrink 1s infinite;
+    }
+
+    .text {
+      line-height: 40px;
+    }
+
+    @keyframes shrink {
+      0% {
+        box-shadow:0 0 0 5px rgb(248, 15, 217);
+        opacity:0.5;
+      }
+      20%{
+        box-shadow:0 0 0 3px rgb(58, 10, 231);
+        opacity:0.55;
+      }
+      40%{
+        box-shadow:0 0 0 4px rgb(29, 238, 10);
+        opacity:0.6;
+      }
+      60%{
+        box-shadow:0 0 0 5px rgb(235, 224, 69);
+        opacity:0.65;
+      }
+      80%{
+        box-shadow:0 0 0 7px rgb(238, 143, 18);
+        opacity:0.7;
+      }
+      100%{
+        box-shadow: 0 0 0 5px rgb(240, 20, 20);
+        opacity:0.78;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="container">
+    <li class="item item1">
+      <div class="circle-box">
+        <div class="circle"></div>
+      </div>
+      <div class="text">盒子1</div>
+    </li>
+    <li class="item item2">
+      <div class="circle-box">
+        <div class="circle"></div>
+      </div>
+      <div class="text">盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2</div>
+    </li>
+    <li class="item item3">
+      <div class="circle-box">
+        <div class="circle"></div>
+      </div>
+      <div class="text">盒子3</div>
+    </li>
+    <li class="item item2">
+      <div class="circle-box">
+        <div class="circle"></div>
+      </div>
+      <div class="text">盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2</div>
+    </li>
+    <li class="item item3">
+      <div class="circle-box">
+        <div class="circle"></div>
+      </div>
+      <div class="text">盒子3</div>
+    </li>
+    <li class="item item2">
+      <div class="circle-box">
+        <div class="circle"></div>
+      </div>
+      <div class="text">盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2盒子2</div>
+    </li>
+  </ul>
+</body>
+
+</html>

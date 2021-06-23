@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grid布局</title>
+  <style>
+
+    .container {
+      display: grid;
+     grid-template-rows: [r1] 100px [r2] 100px [r3] 200px [r4];
+     /* grid-template-columns: repeat(2, 100px 50px 200px); */
+     /* grid-template-columns: repeat(auto-fill, 100px); */
+     grid-template-columns: [c1] 100px [c2] 2fr [c3] 1fr [c4];
+     gap: 20px 30px;
+     grid-template-areas: "a b c" "d f e";
+    }
+    .box {
+      /* width: 100px;
+      height: 100px; */
+      line-height: 100px;
+      text-align: center;
+      background-color: #ff0000;
+    }
+    .box-1 {
+      background-color: rgb(238, 103, 103);
+      /* grid-row: 2 / 5;
+      grid-column: 2 / 3; */
+      grid-area: e;
+      /* align-self: center; */
+    }
+    .box-2 {
+      background-color: rgb(126, 238, 103);
+    }
+    .box-3 {
+      background-color: rgb(131, 69, 33);
+    }
+    .box-4 {
+      background-color: rgb(103, 173, 238);
+    }
+    .box-5 {
+      background-color: rgb(238, 103, 186);
+    }
+    .box-6 {
+      background-color: rgb(228, 137, 34);
+    }
+    .box-7 {
+      background-color: rgb(24, 21, 230);
+    }
+    .box-8 {
+      background-color: rgb(207, 245, 38);
+    }
+    .box-9 {
+      background-color: rgb(233, 4, 221);
+    }
+  </style>
+</head>
+<body>
+  <div style="width: 400px;">
+    <div class="container">
+      <div class="box box-1">格子1</div>
+      <div class="box box-2">格子2</div>
+      <div class="box box-3">格子3</div>
+      <div class="box box-4">格子4</div>
+      <div class="box box-5">格子5</div>
+      <div class="box box-6">格子6</div>
+      <div class="box box-7">格子7</div>
+      <div class="box box-8">格子8</div>
+      <div class="box box-9">格子9</div>
+      <div class="box box-10">格子10</div>
+      <div class="box box-11">格子11</div>
+      <div class="box box-12">格子12</div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script>
+  /**
+   *  1. grid 布局
+   *  概念： 容器 项目 单元格 网格线
+   *  项目属性：
+   *      1. 指定项目位置
+   *         grid-row-start grid-row-end
+   *         grid-column-start grid-column-end
+   *
+   *         grid-row：<start-line> / <end-line>
+   *         grid-column: <start-line> / <end-line>
+   *           grid-column: 1 / span 2;
+   *           grid-row: 1 / span 2;
+   *        值为 网格线位置 || 网格线名字 || span 2(跨越几个网格)
+   *      2. 指定项目区域
+   *        grid-area
+   *        值为 区域名称 || <row-start> / <column-start> / <row-end> / <column-end>;
+   *      3. 单元格内容的位置
+   *         对齐单元格边缘 单元格 单元格内容 不同
+   *         jutify-self
+   *         align-self
+   *         space-self
+   *        值为 start end center stretch
+   *
+   * /
+</script>

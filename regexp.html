@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  测试
+  <input type="text">
+  <script>
+//     const str = '@1 @2 uiyi'
+//     const input = document.getElementsByTagName('input')[0]
+//     input.value = str
+//     input.oninput = (e) => {
+//       console.log(e)
+//       let str2 = input.value
+//       var p = /@[\w]+[\s]/g
+//       let res1 = str2.search(p)
+//       console.log(res1)
+//     }
+//     var str1 = "abbc";
+
+// let p = /@[\S]+[\s]/g
+// 				let res = '@1 @2 1zhang'.match(p)
+//         let res1 = '@邵安琪 @张泊宁'.match(p)
+//         let res2 = '@网 1zhang'.match(p)
+//         let res3 = '@邵安琪 @张泊宁'.match(p)
+//         console.log(p.exec('@1 @2 ah @3 '))
+//         console.log(res, res1, res2, res3)
+
+//       let val = '122pe3e1'
+//       let bb = 'www'
+//       let cc = 'e3'
+//       // val = val.concat('\b\b', bb)
+//       //   let content = val.slice(val.indexOf('\b\b') + 2)
+//       //   console.log(content)
+//       //   console.log(content.indexOf('\b'))
+
+//       //   console.log('@邵安琪'.lastIndexOf('@'),'@邵安琪 '.lastIndexOf('@'))
+//       console.log(val.replace(/@[\S]+[\w]*2/, bb))
+
+  </script>
+  <script>
+    var reg = /view\/(\S*)\/index/
+    var str = 'source/view/approvalEntrance/index/index'
+    console.log(reg.exec(str));
+    console.log(str.match(reg));
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端路由原理history</title>
+</head>
+<body>
+  <a href="/home">主页</a>
+  <a href="/about">关于</a>
+  <a href="/profile">我的</a>
+
+  <div class="navlist">navlist<br/></div>
+
+  <div id="box"></div>
+  <button onclick="fn1()">点击测试</button>
+  <script>
+    const content = document.getElementById('box')
+    // history 实现模式
+    // 用live server运行测试 安装live server插件
+    // 1. const list = document.getElementsByTagName('a')
+    // for(let a of list) {
+    //   a.addEventListener('click', e => {
+    //     e.preventDefault()
+    //     const url = a.getAttribute('href')
+    //     window.history.pushState('a', null, url)
+    //     content.innerHTML = a.innerHTML
+    //   })
+    // }
+    // history 实体改变时触发的事件。
+    // window.addEventListener('popstate', e => {
+    //   content.innerHTML = window.location.pathname
+    // })
+
+    // 测试是否刷新页面
+    function fn1(e) {
+      // 会刷新
+      // window.location.reload()
+      // window.location.href = 'file:///Users/reginezhang/Documents/xxx/js-test/router.html'
+      // window.history.go(0) // 0 会刷新
+      window.history.go(-1) // 不会刷新
+    }
+
+    // 2.自测
+    const routes = [
+      {
+        url: '/home',
+        title: '主页',
+        content: '主页内容'
+      },
+      {
+        url: '/about',
+        title: '关于',
+        content: '相关信息'
+      },
+      {
+        url: '/profile',
+        title: '我的',
+        content: '我的菜单'
+      }
+    ]
+    const wapper = document.querySelector('.navlist')
+    for(let item of routes) {
+      const el = document.createElement('a')
+      el.href = item.url
+      el.innerHTML = item.title
+      wapper.appendChild(el)
+
+      el.addEventListener('click', e => {
+        e.preventDefault()
+        window.history.pushState(item, null, item.url)
+        content.innerHTML = item.content
+      })
+    }
+    window.addEventListener('popstate', e => {
+      content.innerHTML = history.state?.content || ''
+    })
+
+  </script>
+</body>
+</html>

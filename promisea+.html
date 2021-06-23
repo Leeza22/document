@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+  // script 代码块是宏任务
+  var name = 'xxx';
+  function say(name) {
+    console.log('hello', name)
+  }
+  say(name)
+
+  function run() {
+    return new Promise((res) => {
+      res('李小波')
+    })
+  }
+
+  run().then((res) => {
+    console.log('run then', res)
+  })
+
+  console.log('end 1')
+</script>
+
+<script>
+  var age = 18;
+  function happy(age) {
+    console.log(age, '岁快乐！')
+  }
+  happy(age)
+</script>
+
+<script>
+  // const p1 = new Promise((resolve, reject) => {
+  //   resolve(100)
+  // })
+  // const p2 = p1.then(value => {
+  //   console.log(value)
+  //   return p2
+  // })
+
+</script>

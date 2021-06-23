@@ -4,13 +4,21 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack serve --open"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "html-webpack-plugin": "^5.3.1",
+    "hxxx-test-lib": "^1.0.2",
     "requirejs": "^2.3.6",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
   }
 }

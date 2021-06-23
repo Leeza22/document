@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端路由实现原理</title>
+</head>
+<body>
+  <a href="#/home">主页</a>
+  <a href="#/about">关于</a>
+  <a href="#/profile">我的</a>
+  <div id="box"></div>
+
+  <script>
+    const content = document.getElementById('box')
+
+    window.addEventListener('hashchange', e => {
+      content.innerHTML = window.location.hash.replace('#/', '')
+    })
+  </script>
+</body>
+</html>

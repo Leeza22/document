@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		左侧
+		<button>moveto 0 100</button>
+		<button>moveby 200, 100</button>
+		<button>弹出窗口</button>
+		<script>
+			window.onload = function() {
+				let btns = document.getElementsByTagName('button')
+				btns[0].onclick = () => {
+					console.log(1)
+					window.moveTo(0, 100)
+				}
+				btns[1].onclick = () => {
+					window.moveBy(200, 100)
+				}
+				btns[2].onclick = () => {
+					let minWindow = window.open('top.html', '_blank', 'height=200,width=200,resizable=false,left=200', false)
+					setTimeout(() => {
+						minWindow.close()
+					}, 2000)
+				}
+				
+				console.log(navigator.plugins)
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- jquery -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">添加图片</h3>
+    </div>
+    <div class="panel-body">
+      <form class="form">
+        <div class="form-group">
+          <label for="name">姓名</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="" value="">
+        </div>
+        <div class="form-group">
+          <label for="age">年龄</label>
+          <input type="number" class="form-control" id="age" name="age" placeholder="" value="">
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="sex" value="man"> 男&nbsp;&nbsp;
+          </label>
+          <label>
+            <input type="radio" name="sex" value="woman"> 女&nbsp;&nbsp;
+          </label>
+          <label>
+            <input type="radio" name="sex" value="unkonwn"> 未知&nbsp;&nbsp;
+          </label>
+        </div>
+        <button type="submit" class="btn btn-default submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="./IDBinstance.js" crossorigin="anonymous"></script>
+
+  <script>
+      window.onload = function() {
+        // 解析参数
+        let params = null
+        console.log(location.search);
+        if (location.search) {
+          const searchStr = location.search.slice(1)
+          const paramses = searchStr.split('&')
+          if (paramses.length < 1) return
+
+          params = paramses.reduce((pre, cur, curindex, arr) => {
+            itemes = cur.split('=')
+            pre[itemes[0]] = itemes[1]
+            return pre
+          }, {})
+        }
+
+        // 判断操作 状态 add还是edit
+        console.log(params)
+        let handleType = "add"
+        if (params && params.id) {
+          handleType = "edit"
+          getFn(params.id)
+            .then(data => {
+              $(':input[name=name]').val(data.name);
+              $(':input[name=age]').val(data.age);
+              $(`:radio[value=${data.sex}]`).attr('checked', 'true')
+              $('.form').append(`<input type="hidden" class="form-control" id="id" name="id" value="${data.id}">`)
+            })
+        }
+
+
+        const form = $('.form')
+        $('.submit').on('click', e => {
+          e.preventDefault()
+          const formList = form.serializeArray()
+          const obj = {}
+          formList.forEach(item => obj[item.name] = item.value)
+
+          if (handleType === "add") addFn(obj)
+          else putFn(obj)
+        })
+        function addFn(data) {
+          const myDatabase = new IDBInstance();
+          myDatabase.open('MyTestDatabase', 1)
+            .then(res => {
+                const objectStore = res.storeInstance('classes', { keyPath: 'id', autoIncrement: true })
+                if (!objectStore) return
+                objectStore.createIndex('name', 'name', { unique: false });
+                objectStore.transaction.oncomplete = () => {
+                  return
+                }
+            })
+            .then(res => {
+              return myDatabase.store('classes').add(data)
+            })
+            .then(res => {
+              location.replace('./indexDB.html')
+            })
+        }
+
+        function getFn(id) {
+          const myDatabase = new IDBInstance();
+          return myDatabase.open('MyTestDatabase', 1)
+            .then(res => {
+              return myDatabase.store('classes').get(id)
+            })
+        }
+
+        function putFn(data) {
+          data.id = data.id * 1
+          const myDatabase = new IDBInstance();
+          return myDatabase.open('MyTestDatabase', 1)
+            .then(res => {
+              return myDatabase.store('classes').put(data)
+            })
+            .then(res => {
+              location.replace('./indexDB.html')
+            })
+        }
+      }
+
+  </script>
+</body>
+</html>

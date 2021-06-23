@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style>
+		 p{
+			 width: 100px;
+			 background-color: purple;
+			 box-shadow: 0 -1px 0 0 #333;
+		 }
+		 i{
+			 display: inline-block;
+			 width: max-content; 
+			 /*超出展示 英文可以超出*/
+			 background-color: pink;
+		 }
+		 b{
+			 background-color: yellow;
+		 }
+	</style>
+</head>
+<body>
+	test1
+	<p>
+		<i>asdhajhjdhjajhdjkhajkdkaksdkajakdjkaj</i> 
+		<br>
+		<b>我饿函数的是丢会死UI厚度是u是丢护士对话是的风俗</b>
+	</p>
+	<input type="text">
+
+	<script src="async.js"></script>
+	<script type="text/javascript">
+
+		let str = "@1212"
+		let str1 = "我是"
+		let strs = encodeURIComponent(str)
+
+	  let input = document.getElementsByTagName('input')[0]
+	  input.onchange = function(val) {
+			console.log(val)
+			input.value = decodeURIComponent(input.value + strs)
+			console.log(strs.length, strs)
+		  // console.log(input.value)
+		  // console.log(input.value.length)
+		}
+	
+		// console.log(strs.length)
+		// console.log(decodeURIComponent(strs))
+		// console.log(window.screenfull)
+		
+
+	  var a = 1;
+	  var obj = {
+		  b:2
+	  }
+	  var fn = function() {}
+	  fn.c = 3
+	  
+	  function test(x,y,z){
+		  x = 4;
+		  y.b = 5;
+		  z.c = 6;
+	  }
+	  
+	  test(a, obj, fn)
+	  console.log(a+obj.b+fn.c, a, obj.b, fn.c) //12
+	  
+	  var name = 'this window'
+	  var objects = {
+		  name: 'my object',
+		  getNameFn: function() {
+			  let that = this
+			  return function() {
+				  return this.name
+			  }
+		  }
+	  }
+	  console.log(objects.getNameFn()())
+	  console.log(self.frames[0])
+	</script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- jquery -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  <style>
+    .cell-img {
+      width: 100px;
+    }
+    .table-caption {
+      overflow: hidden;
+      line-height: 30px;
+      text-align: center;
+    }
+    .fr {
+      float: left;
+    }
+  </style>
+</head>
+<body>
+  <h3 style="text-align: center;">indexedBD test</h3>
+
+  <table class="table table2 table-hover" id="table2"></table>
+
+  <hr>
+
+  <button class="add">add</button>
+  <button class="get">get</button>
+  <button class="put">put</button>
+  <button class="del">del</button>
+  <button class="all">all</button>
+  <table class="table table1 table-hover" id="table"></table>
+
+  <script src="./IDBinstance.js"></script>
+  <script src="./Table.js"></script>
+
+  <script>
+    const table2El = document.querySelector('.table2');
+    // 表格数据
+    let table2 = new TableStudent(table2El);
+
+    $('.add-student').on('click', addRow)
+
+    table2El.onclick = (e) => {
+      if (e.target.nodeName !== "BUTTON") return
+      if (e.target.nodeName === "BUTTON" && e.target.classList.contains('edit')) {
+        editRow(e.target.dataset.id)
+      }
+      if (e.target.nodeName === "BUTTON" && e.target.classList.contains('delete')) {
+        delRow(e.target.dataset.id)
+      }
+    }
+
+    function addRow(e) {
+      location.replace('./form.html')
+    }
+
+    function editRow(id) {
+      location.replace('./form.html?id=' + id)
+    }
+    async function delRow(id) {
+      await myDatabase.store('classes').del(id)
+      showList()
+    }
+
+
+    const myDatabase = new IDBInstance();
+    myDatabase.open('MyTestDatabase', 1)
+      .then(res => {
+          const objectStore = res.storeInstance('classes', { keyPath: 'id', autoIncrement: true })
+          if (!objectStore) return
+          objectStore.createIndex('name', 'name', { unique: false });
+          objectStore.transaction.oncomplete = function() {
+            showList()
+          }
+
+          res.storeInstance('imgs', { keyPath: 'id', autoIncrement: true });
+      })
+      .then(res => {
+          showList()
+          allFn()
+      })
+
+    async function showList(storeName) {
+      const data = await myDatabase.store('classes').all();
+      if (!data) throw new Error('查询失败');
+      table2.list = data;
+      table2.buildTableList();
+    }
+
+  </script>
+
+  <script>
+
+    let table1 = new ImgTable(document.querySelector('.table1'));
+
+    let addEl = document.querySelector('.add');
+    function addFn() {
+      myDatabase.store('imgs').add({
+        name: 'picture1',
+        path: 'https://img1.baidu.com/it/u=3723266797,384780027&fm=26&fmt=auto&gp=0.jpg'
+      })
+      .then(res => {
+        return allFn()
+      })
+    }
+    addEl.addEventListener('click', addFn, false);
+
+    let getEl = document.querySelector('.get');
+    function getFn() {
+      const id = getId()
+      if (id === undefined) return
+      myDatabase.store('imgs').get(id)
+        .then(res => console.log(res))
+    }
+    getEl.addEventListener('click', getFn, false);
+
+
+    let putEl = document.querySelector('.put');
+    function putFn() {
+      const id = getId()
+      if (id === undefined) return
+      myDatabase.store('imgs').put({
+        id: id,
+        name: 'photograph',
+        path: 'https://img2.baidu.com/it/u=3006305824,3387403748&fm=26&fmt=auto&gp=0.jpg'
+      })
+        .then(res => {
+          return allFn()
+        })
+    }
+    putEl.addEventListener('click', putFn, false);
+
+    let delEl = document.querySelector('.del');
+    function delFn() {
+      const id = getId()
+      if (id === undefined) return
+      myDatabase.store('imgs').del(id)
+        .then(res => {
+          return allFn()
+        })
+    }
+    delEl.addEventListener('click', delFn, false);
+
+
+    let allEl = document.querySelector('.all');
+    async function allFn() {
+      const data = await myDatabase.store('imgs').all();
+      if (!data) throw new Error('查询失败');
+      table1.list = data;
+      table1.buildTableList();
+    }
+    allEl.addEventListener('click', allFn, false);
+
+
+    function getId() {
+      let id = prompt('请输入要操作序号id') * 1
+      if (isNaN(id) || id === 0) {
+        alert('请输入有效数字')
+      } else {
+        return id
+      }
+    }
+  </script>
+</body>
+</html>

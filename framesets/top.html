@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>top.html</h1>
+		在最高层窗口中访问本框架的方式：
+		<!-- <li>window.frames[2]</li> -->
+		<li>window.frames["top"]</li>
+		<!-- <li>top.frames[2]</li>
+		<li>top.frames["right"]</li>
+		<li>frames[2]</li>
+		<li>frames["rihgt"]</li> -->
+		单击本页面，让第[2]框架窗口（bottom.html）背景色为黄色
+		
+	<script>
+		window.onload = function() {
+			document.body.onclick = f
+
+			console.log(parent.frames[0].name)
+			console.log(parent.frames[1].name)
+			console.log(parent.frames[2].name)
+		}
+		function f() {
+			parent.frames[2].document.body.style.backgroundColor = 'yellow'
+		}
+	</script>
+	</body>
+</html>
